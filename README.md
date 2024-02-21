@@ -1,3 +1,3 @@
 # Group7-CSC468CloudComputing
-# Fusion Banking
+# FusionBanking
 Our vision is to create a universal banking application that will allow the consumer to interact with several of their bank accounts through one app. Building upon this foundation, we are dedicated to integrating advanced Python bot functionality alongside the bank APIs and SQL Lite technology. This holistic approach will enable users to seamlessly manage multiple accounts, access comprehensive financial insights, and execute transactions with ease. By consolidating disparate banking experiences into a unified platform, we aspire to streamline financial management and enhance user convenience. Our overarching goal is to redefine the banking experience, fostering greater efficiency, security, and accessibility for all users. This vision is a simple one but can positively impact many people. 
