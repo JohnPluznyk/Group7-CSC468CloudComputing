@@ -1,3 +1,4 @@
+//NOTE the MYSQL SERVER should be up and running before the server is started
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
@@ -7,7 +8,7 @@ const port = 3000;
 
 // MySQL database configuration
 const db = mysql.createConnection({
-  host: '07ec6358bc5c',
+  host: 'mysql1',
   user: 'john',
   password: 'password',
   database: 'FusionBank',
