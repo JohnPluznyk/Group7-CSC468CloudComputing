@@ -1,6 +1,9 @@
 # Use an official MySQL runtime as a parent image
 FROM mysql/mysql-server:latest
 
+# Set the hostname of the container
+ENV HOSTNAME mysql
+
 # Set the root password for MySQL
 ENV MYSQL_ROOT_PASSWORD password
 
