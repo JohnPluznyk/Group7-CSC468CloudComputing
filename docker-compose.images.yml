@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  mysql_config:
+    build: mysql
+    image: 127.0.0.1:30000/mysql:v0.1
+    ports:
+    - "3306:3306"
+    deploy:
+      mode: global
+
+  mysql_config:
+    build: node_config
+    image: 127.0.0.1:30000/node:v0.1
+    ports:
+    - "3000:3000"
+    deploy:
+      mode: global
+# CONTINUTE TO EDIT FILE FROM HERE
