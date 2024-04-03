@@ -7,7 +7,7 @@ const port = 3000;
 
 // MySQL database configuration
 const db = mysql.createConnection({
-  host: '172.19.0.2',
+  host: '172.19.0.2',  //NEED TO HAVE HOSTNAME WITH WORDS INStead of address
   user: 'john',
   password: 'password',
   database: 'FusionBank',
