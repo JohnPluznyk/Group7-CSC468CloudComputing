@@ -10,7 +10,7 @@ services:
       mode: global
 
   mysql_config:
-    build: node_config
+    build: node
     image: 127.0.0.1:30000/node:v0.1
     ports:
     - "3000:3000"
