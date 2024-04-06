@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  mysql_config:
+  mysql:
     build: mysql
     image: 127.0.0.1:30000/mysql:v0.1
     ports:
@@ -9,7 +9,7 @@ services:
     deploy:
       mode: global
 
-  mysql_config:
+  node:
     build: node
     image: 127.0.0.1:30000/node:v0.1
     ports:
