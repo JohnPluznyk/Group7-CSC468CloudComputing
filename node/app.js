@@ -8,7 +8,7 @@ const port = 3000;
 
 // MySQL database configuration
 const db = mysql.createConnection({
-  host: 'mysql-service',
+  host: 'mysql-service.jp947689.svc.cluster.local',  //NEED to figure out the proper host
   user: 'john',
   password: 'password',
   database: 'FusionBank',
