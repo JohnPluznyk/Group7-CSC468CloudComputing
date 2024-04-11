@@ -8,7 +8,7 @@ const port = 3000;
 
 // MySQL database configuration
 const db = mysql.createConnection({
-  host: 'mysql-service.jp947689.svc.cluster.local',  //NEED to figure out the proper host
+  host: 'mysql-service.jp947689.svc.cluster.local',  //NEED to figure out the proper host  //I believe jp947689 refers to the namespace that I had deployed the mysql service in
   user: 'john',
   password: 'password',
   database: 'FusionBank',
