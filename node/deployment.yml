@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: 127.0.0.1:30000/mysql:v0.1
+        ports:
+        - name: mysql-port
+          containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - name: node
+        image: 127.0.0.1:30000/node:v0.1
+        ports:
+        - name: node-port
+          containerPort: 3000
+
