@@ -1,0 +1,25 @@
+{
+    "user1": {
+        "credit_balance": 4500,
+        "credit_paid" : 1500,
+        "remaining_balance" : 3000
+    },
+
+    "user2": {
+        "credit_balance": 4500,
+        "credit_paid" : 1500,
+        "remaining_balance" : 3000
+    },
+
+    "user3": {
+        "credit_balance": 4500,
+        "credit_paid" : 1500,
+        "remaining_balance" : 3000
+    },
+
+    "user4": {
+        "credit_balance": 4500,
+        "credit_paid" : 1500,
+        "remaining_balance" : 3000
+    }
+}

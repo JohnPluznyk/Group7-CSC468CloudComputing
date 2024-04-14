@@ -1,0 +1,163 @@
+{
+    
+    "user1": {
+        
+        "jan": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "feb": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "march": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "april": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "may": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "june": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "july": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        }
+
+    },
+
+    "user2": {
+        
+        "jan": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "feb": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "march": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "april": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "may": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "june": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "july": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        }
+
+    },
+
+    "user3": {
+        
+        "jan": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "feb": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "march": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "april": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "may": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "june": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "july": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        }
+
+    },
+
+    "user4": {
+        
+        "jan": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "feb": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "march": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "april": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "may": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "june": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        },
+        "july": {
+            "total_spent": 15450,
+            "liability": 4000,
+            "asset": 1300
+        }
+
+    }
+
+}
