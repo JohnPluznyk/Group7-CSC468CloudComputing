@@ -3,18 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration</title>
+  <title>User Registration and Login</title>
 </head>
 <body>
   <h1>User Registration</h1>
-  <form action="/submit" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+  <form id="signup-form" action="/register" method="post">
+    <label for="reg-username">Username:</label>
+    <input type="text" id="reg-username" name="username" required>
     <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Submit</button>
+    <label for="reg-password">Password:</label>
+    <input type="password" id="reg-password" name="password" required minlength="8">  <br>
+    <button type="submit">Sign Up</button>
   </form>
+  <div id="registration-message"></div>  <h1>Login</h1>
+  <form id="login-form" action="/login" method="post">
+    <label for="login-username">Username:</label>
+    <input type="text" id="login-username" name="username" required>
+    <br>
+    <label for="login-password">Password:</label>
+    <input type="password" id="login-password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
+  </form>
+  <div id="login-message"></div>  <script>
+      // Handle form submission for user registration
+      document.getElementById('signup-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('reg-username').value;
+      const password = document.getElementById('reg-password').value;
+
+      // Basic client-side validation (optional)
+      if (password.length < 8) {
+        alert("Password must be at least 8 characters long!");
+        return;  // Prevent form submission if password is too short
+      }
+
+      console.log('Form submitted');
+      console.log('Username:', username);
+      console.log('password', password);
+
+//      const formData = new FormData();
+//      formData.append('username', username);
+//      formData.append('password', password);
+
+      const formData = { username, password };
+//      console.log('Form data: ', formData);
+
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+/*      
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        body: formData
+      });
+*/
+      const messageContainer = document.getElementById('registration-message');
+      const message = await response.text();
+      messageContainer.textContent = message;
+    });
+
+    // Handle form submission for user login (similar logic)
+    document.getElementById('login-form').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+
+      const formData = { username, password };
+
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+/*
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('password', password);
+
+      const response = await fetch('/login', {
+        method: 'POST',
+        body: formData
+      });
+*/
+
+      const messageContainer = document.getElementById('login-message');
+      const message = await response.text();
+
+      // Check if login was successful
+      if (response.ok) {
+        // Redirect to home page
+        window.location.href = '/home/home.html';
+      } else {
+        // Display error message
+        messageContainer.textContent = message;
+      }
+    });
+  </script>
 </body>
 </html>

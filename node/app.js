@@ -1,14 +1,18 @@
-//NOTE the MYSQL SERVER should be up and running before the server is started
 const express = require('express');
 const mysql = require('mysql2');
+const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
+app.use('/home', express.static(path.join(__dirname, 'home')));
+
 // MySQL database configuration
 const db = mysql.createConnection({
-  host: 'mysql-service.jp947689.svc.cluster.local',  //NEED to figure out the proper host  //I believe jp947689 refers to the namespace that I had deployed the mysql service in
+  host: 'mysql1',
   user: 'john',
   password: 'password',
   database: 'FusionBank',
@@ -23,25 +27,99 @@ db.connect((err) => {
   console.log('Connected to MySQL as id ' + db.threadId);
 });
 
-// Middleware to parse POST request body
+// Middleware
+app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve HTML form
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+// Serve HTML form for signup
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Handle form submission
-app.post('/submit', (req, res) => {
+// Rest of routes
+
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+  console.log('username after destructring:', username);
+  console.log('Password after destructring:', password);
+
+  try {
+    // Check if the username already exists (existing code)
+    // ...
+
+    const saltRounds = 10; // Adjust the cost factor as needed
+
+    try {
+      const salt = await bcrypt.genSalt(saltRounds);
+      console.log('Password before hashing:', password);
+      console.log('Generated salt:', salt);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      // Insert data into MySQL (use hashedPassword)
+      const insertUserQuery = 'INSERT INTO users (username, password) VALUES (?, ?)';
+      db.query(insertUserQuery, [username, hashedPassword], (err, result) => {
+        if (err) {
+          console.error('Error inserting record: ' + err.stack);
+          res.status(500).send('Error inserting record');
+          return;
+        }
+        console.log('Record inserted: ', result);
+        // Send a success message back to the client
+        res.send('User registered successfully!');
+      });
+    } catch (error) {
+      console.error('Error hashing password: ' + error.stack);
+      res.status(500).send('Error registering user');
+    }
+  } catch (error) {
+    console.error('Error registering user: ' + error.stack);
+    res.status(500).send('Error registering user');
+  }
+});
+
+
+
+// Handle form submission for user login
+app.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
-  // Insert data into MySQL
-  const sql = 'INSERT INTO users (username, password) VALUES (?, ?)';
-  db.query(sql, [username, password], (err, result) => {
-    if (err) throw err;
-    console.log('Record inserted: ', result);
-    res.send('Data inserted successfully!');
-  });
+  try {
+    // Query the database to get user by username
+    const sql = 'SELECT * FROM users WHERE username = ?';
+    db.query(sql, [username], async (err, results) => {
+      if (err) {
+        console.error('Error querying database: ' + err.stack);
+        res.status(500).send('Error querying database');
+        return;
+      }
+
+      if (results.length === 0) {
+        res.status(401).send('Invalid username or password');
+        return;
+      }
+
+      // Compare the provided password with the hashed password
+      const user = results[0];
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (passwordMatch) {
+        // Store user data in session
+        req.session.user = user;
+        res.sendFile(path.join(__dirname, 'home', 'home.html'));
+      } else {
+        res.status(401).send('Invalid username or password');
+      }
+    });
+  } catch (error) {
+    console.error('Error logging in: ' + error.stack);
+    res.status(500).send('Error logging in');
+  }
 });
 
 // Start the server
