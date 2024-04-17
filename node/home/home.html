@@ -12,14 +12,14 @@
             <img src="FusionBankLogo.png" alt="Company Logo">
         </div>
         <div class="user-info">
-            <span>Welcome, [Username]</span>
+            <span id="username"></span>
         </div>
     </header>
     <main>
         <section class="main-section">
             <h1>Welcome to Fusion-Bank Open Banking Platform</h1>
             <p>Connect all your bank accounts in one place</p>
-            <a href="#" class="cta-btn">Get Started</a>
+            <a href="#" class="cta-btn">Add Accounts</a>
         </section>
         <section class="bank-accounts">
             <!-- Bank account entries will be dynamically generated here -->
@@ -36,6 +36,18 @@
             </ul>
         </nav>
     </footer>
+
+    <script>
+        // Fetch username from server
+        fetch('/get-username')
+          .then(response => response.text())
+          .then(username => {
+            document.getElementById('username').textContent = `Welcome, ${username}!`;
+          })
+          .catch(error => {
+            console.error('Error fetching username:', error);
+          });
+      </script>
 </body>
 </html>
 

@@ -110,7 +110,10 @@ app.post('/login', async (req, res) => {
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
         // Store user data in session
-        req.session.user = user;
+        req.session.user = {
+          username: user.username,
+        };
+
         res.sendFile(path.join(__dirname, 'home', 'home.html'));
       } else {
         res.status(401).send('Invalid username or password');
@@ -120,6 +123,12 @@ app.post('/login', async (req, res) => {
     console.error('Error logging in: ' + error.stack);
     res.status(500).send('Error logging in');
   }
+});
+
+// Endpoint to get current username
+app.get('/get-username', (req, res) => {
+  const username = req.session.user.username;
+  res.send(username);
 });
 
 // Start the server
