@@ -6,20 +6,20 @@
     },
 
     "user2": {
-        "credit_balance": 4500,
-        "credit_paid" : 1500,
-        "remaining_balance" : 3000
+        "credit_balance": 1300,
+        "credit_paid" : 900,
+        "remaining_balance" : 400
     },
 
     "user3": {
-        "credit_balance": 4500,
-        "credit_paid" : 1500,
-        "remaining_balance" : 3000
+        "credit_balance": 750,
+        "credit_paid" : 200,
+        "remaining_balance" : 550
     },
 
     "user4": {
-        "credit_balance": 4500,
+        "credit_balance": 3500,
         "credit_paid" : 1500,
-        "remaining_balance" : 3000
+        "remaining_balance" : 2000
     }
 }
