@@ -8,34 +8,34 @@
             "asset": 1300
         },
         "feb": {
-            "total_spent": 15450,
-            "liability": 4000,
-            "asset": 1300
+            "total_spent": 13000,
+            "liability": 3000,
+            "asset": 900
         },
         "march": {
-            "total_spent": 15450,
-            "liability": 4000,
-            "asset": 1300
+            "total_spent": 10000,
+            "liability": 3000,
+            "asset": 1100
         },
         "april": {
-            "total_spent": 15450,
-            "liability": 4000,
-            "asset": 1300
+            "total_spent": 20500,
+            "liability": 7000,
+            "asset": 2500
         },
         "may": {
-            "total_spent": 15450,
-            "liability": 4000,
-            "asset": 1300
+            "total_spent": 9000,
+            "liability": 1200,
+            "asset": 900
         },
         "june": {
-            "total_spent": 15450,
+            "total_spent": 13500,
             "liability": 4000,
             "asset": 1300
         },
         "july": {
-            "total_spent": 15450,
-            "liability": 4000,
-            "asset": 1300
+            "total_spent": 21500,
+            "liability": 13000,
+            "asset": 4000
         }
 
     },
