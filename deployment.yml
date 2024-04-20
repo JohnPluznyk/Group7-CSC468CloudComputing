@@ -45,3 +45,25 @@ spec:
         - name: node-port
           containerPort: 3000
 
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankserver-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - name: bankserver
+        image: 127.0.0.1:30000/bankserver:v0.1
+        ports:
+        - name: node-port
+          containerPort: 3000
