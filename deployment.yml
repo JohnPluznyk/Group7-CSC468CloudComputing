@@ -66,4 +66,4 @@ spec:
         image: 127.0.0.1:30000/bankserver:v0.1
         ports:
         - name: node-port
-          containerPort: 3000
+          containerPort: 8000
