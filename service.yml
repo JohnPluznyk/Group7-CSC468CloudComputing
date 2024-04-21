@@ -38,8 +38,8 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 8000
+      targetPort: 8000
       nodePort: 30003  # Specify the desired NodePort value
   selector:
     app: node
