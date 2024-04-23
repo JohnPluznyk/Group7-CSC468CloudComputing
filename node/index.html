@@ -58,12 +58,6 @@
         body: JSON.stringify(formData)
       });
 
-/*      
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
-        body: formData
-      });
-*/
       const messageContainer = document.getElementById('registration-message');
       const message = await response.text();
       messageContainer.textContent = message;

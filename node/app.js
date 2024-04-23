@@ -11,8 +11,9 @@ const port = 3000;
 app.use('/home', express.static(path.join(__dirname, 'home')));
 
 // MySQL database configuration
+// host: 'mysql-service.jp947689.svc.cluster.local' --- When using kubernetes
 const db = mysql.createConnection({
-  host: 'mysql-service.jp947689.svc.cluster.local',
+  host: 'mysql1',
   user: 'john',
   password: 'password',
   database: 'FusionBank',
@@ -125,6 +126,29 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Handle form submission for bank data
+app.post('/submit-bank-data', (req, res) => {
+  const { userBank, userName, userPassword } = req.body;
+
+  try {
+    // Insert bank data into MySQL
+    const insertBankDataQuery = 'INSERT INTO bankingInfo (bank, username, password) VALUES (?, ?, ?)';
+    db.query(insertBankDataQuery, [userBank, userName, userPassword], (err, result) => {
+      if (err) {
+        console.error('Error inserting bank data: ' + err.stack);
+        res.status(500).send('Error inserting bank data');
+        return;
+      }
+      console.log('Bank data inserted: ', result);
+      // Send a success message back to the client
+      res.send('Bank data submitted successfully!');
+    });
+  } catch (error) {
+    console.error('Error submitting bank data: ' + error.stack);
+    res.status(500).send('Error submitting bank data');
+  }
+});
+
 // Endpoint to get current username
 app.get('/get-username', (req, res) => {
   const username = req.session.user.username;
@@ -135,4 +159,3 @@ app.get('/get-username', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
-

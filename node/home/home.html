@@ -19,8 +19,28 @@
         <section class="main-section">
             <h1>Welcome to Fusion-Bank Open Banking Platform</h1>
             <p>Connect all your bank accounts in one place</p>
-            <a href="#" class="cta-btn">Add Accounts</a>
         </section>
+        
+        <section class="body-section">
+            <button id="addAccounts">Add Bank Accounts</button>
+            <!-- The Modal -->
+            <div id="dataModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form id="dataForm">
+                        <input type="text" id="userBank" placeholder="Enter your bank">
+                        <br>
+                        <input type="text" id="userName" placeholder="Enter your bank userName">
+                        <br>
+                        <input type="text" id="userPassword" placeholder="Enter your bank Passwod">
+                        <br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
         <hr>
         <section class="bank-accounts">
             <!-- Bank account entries will be dynamically generated here -->
@@ -39,6 +59,65 @@
     </footer>
 
     <script>
+/////////////////////////////////////////////////////////////////////////////////////////////
+        // Get the modal
+        const modal = document.getElementById('dataModal');
+
+        // Get the button that opens the modal
+        const btn = document.getElementById('addAccounts');
+
+        // Get the <span> element that closes the modal
+        const span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = 'block';
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        document.getElementById('dataForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        const userBank = document.getElementById('userBank').value;
+        const userName = document.getElementById('userName').value;
+        const userPassword = document.getElementById('userPassword').value;
+
+        const formData = { userBank, userName, userPassword };
+
+        try {
+            const response = await fetch('/submit-bank-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+            });
+
+           // Close the modal if submission is successful
+            if (response.ok) {
+                const modal = document.getElementById('dataModal');
+                modal.style.display = 'none';
+            }
+
+        } catch (error) {
+            console.error('Error submitting bank data: ', error);
+            // Handle error
+        }
+        });
+//////////////////////////////////////////////////////////////////////////////////////
+
+
         // Fetch username from server
         fetch('/get-username')
           .then(response => response.text())
