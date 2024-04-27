@@ -163,7 +163,8 @@ app.get('/get-username', (req, res) => {
 /////////////////////////////////////////Fetch data from bank server/////////////////////////////////////////////////////
 
 // Define the URL of your FastAPI server
-const apiUrl = 'http://172.18.0.3:8000';
+// 172.18.0.*:8000 --- when testing locally on docker
+const apiUrl = 'http://bankserver-service.jp947689.svc.cluster.local:8000';
 
 
 // Define the credentials for authentication
