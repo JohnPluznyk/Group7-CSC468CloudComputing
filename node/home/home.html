@@ -40,12 +40,80 @@
                 </div>
             </div>
         </section>
-
         <hr>
-        <section class="bank-accounts">
-            <!-- Bank account entries will be dynamically generated here -->
-        </section>
+
+<!-----------------------------------------------------Add Accounts section------------------------------------------>
+        <h1>Connected Accounts: </h1>
+        <div id="output"></div>
+<!--        <button id="updateButton">Update Balance</button>  -->
+
+<!--
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        
+        <script>
+            // Define the apiUrl
+            const apiUrl = 'http://172.18.0.3:8000';
+
+
+            // Define the credentials for authentication
+            const credentials = new URLSearchParams();
+
+            // Function to get user balance
+            async function getUserBalance(username, password) {
+                credentials.append('username', username);
+                credentials.append('password', password);
+
+                try {
+                    const tokenResponse = await axios.post(`${apiUrl}/token`, credentials);
+                    if (!tokenResponse || !tokenResponse.data || !tokenResponse.data.access_token) {
+                        throw new Error('Failed to obtain access token');
+                    }
+                const accessToken = tokenResponse.data.access_token;
+
+                // Make request to userbalance endpoint with the access token
+                const response = await axios.get(`${apiUrl}/userbalance`, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                // Return the user balance from the response
+                return response.data.current_balance;
+
+                } catch (error) {
+                    // Handle errors
+                    console.error('Error:', error.message);
+                }    
+            }
+            
+
+            // Function to update HTML content with user balance
+            async function updateUserBalance() {
+                const balance = await getUserBalance();
+                const outputDiv = document.getElementById('output');
+                // Create a new paragraph element
+                const paragraph = document.createElement('p');
+                // Set the text content of the paragraph to the user balance
+                paragraph.textContent = `User Balance: $${balance}`;
+                // Append the paragraph to the output div
+                outputDiv.appendChild(paragraph);
+            }
+
+
+            // Event listener for button click  --- when button is clicked this code will execute
+            document.getElementById('updateButton').addEventListener('click', updateUserBalance);
+        </script>
+-->
+        <hr>
+        
+        <!-- Bank account entries will be dynamically generated here -->
+        <!--<button id="getUserBalanceBtn">Get User Balance</button>
+        -->
+
+
     </main>
+
+    <!-------------------------------------------Footer------------------------------------------------>
     <footer>
         <div class="contact-info">
             <p>Contact us: email@example.com | 123-456-7890</p>
@@ -58,8 +126,62 @@
         </nav>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
     <script>
 /////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // Define the apiUrl
+        const apiUrl = 'http://172.18.0.3:8000';
+
+        // Define the credentials for authentication
+        const credentials = new URLSearchParams();
+
+        // Function to get user balance
+        async function getUserBalance(username, password) {
+            credentials.append('username', username);
+            credentials.append('password', password);
+
+            try {
+                const tokenResponse = await axios.post(`${apiUrl}/token`, credentials);
+                if (!tokenResponse || !tokenResponse.data || !tokenResponse.data.access_token) {
+                    throw new Error('Failed to obtain access token');
+                }
+            const accessToken = tokenResponse.data.access_token;
+
+            // Make request to userbalance endpoint with the access token
+            const response = await axios.get(`${apiUrl}/userbalance`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            // Return the user balance from the response
+            return response.data.current_balance;
+
+            } catch (error) {
+                // Handle errors
+                console.error('Error:', error.message);
+            }    
+        }
+        
+
+        // Function to update HTML content with user balance
+        async function updateUserBalance(userBank, username, password) {
+            // call the getUserBalance function and pass the username and password
+            const balance = await getUserBalance(username, password);
+            const outputDiv = document.getElementById('output');
+            // Create a new paragraph element
+            const paragraph = document.createElement('p');
+            // Set the text content of the paragraph to the user balance
+            paragraph.innerHTML = `Bank: ${userBank}<br>User Balance: $${balance}`;
+            // Add a class to the paragraph for styling
+            paragraph.classList.add('user-balance'); // Adding a class for styling
+            // Append the paragraph to the output div
+            outputDiv.appendChild(paragraph);
+        }
+
+//////////////////////////////////////////////////////////////////////////////
         // Get the modal
         const modal = document.getElementById('dataModal');
 
@@ -87,36 +209,38 @@
         };
 
         document.getElementById('dataForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        
-        const userBank = document.getElementById('userBank').value;
-        const userName = document.getElementById('userName').value;
-        const userPassword = document.getElementById('userPassword').value;
+            event.preventDefault();
+            
+            const userBank = document.getElementById('userBank').value;
+            const userName = document.getElementById('userName').value;
+            const userPassword = document.getElementById('userPassword').value;
 
-        const formData = { userBank, userName, userPassword };
+            const formData = { userBank, userName, userPassword };
 
-        try {
-            const response = await fetch('/submit-bank-data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-            });
+            try {
+                const response = await fetch('/submit-bank-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+                });
 
-           // Close the modal if submission is successful
-            if (response.ok) {
-                const modal = document.getElementById('dataModal');
-                modal.style.display = 'none';
+            // Close the modal if submission is successful
+                if (response.ok) {
+                    // Call updateUserBalance to display the balance
+                    updateUserBalance(userBank, userName, userPassword)
+
+                    const modal = document.getElementById('dataModal');
+                    modal.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error submitting bank data: ', error);
+                // Handle error
             }
-
-        } catch (error) {
-            console.error('Error submitting bank data: ', error);
-            // Handle error
-        }
         });
 //////////////////////////////////////////////////////////////////////////////////////
-
 
         // Fetch username from server
         fetch('/get-username')

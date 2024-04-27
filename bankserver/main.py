@@ -1,9 +1,25 @@
 from fastapi import FastAPI, Body, Request, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 import json
 
 app = FastAPI()
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+# CORS Configuration
+origins = [
+    "http://localhost",
+    "http://localhost:3000",  # Assuming your client-side application runs on this port
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Authorization", "Content-Type"],
+)
+
 
 @app.get("/ping")
 def home():

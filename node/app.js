@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 const port = 3000;
@@ -129,6 +130,9 @@ app.post('/login', async (req, res) => {
 // Handle form submission for bank data
 app.post('/submit-bank-data', (req, res) => {
   const { userBank, userName, userPassword } = req.body;
+  console.log("UserBank: " + userBank);
+  console.log("UserBank: " + userName);
+  console.log("UserBank: " + userPassword);
 
   try {
     // Insert bank data into MySQL
@@ -147,6 +151,8 @@ app.post('/submit-bank-data', (req, res) => {
     console.error('Error submitting bank data: ' + error.stack);
     res.status(500).send('Error submitting bank data');
   }
+
+  getUserBalance();
 });
 
 // Endpoint to get current username
@@ -154,7 +160,48 @@ app.get('/get-username', (req, res) => {
   const username = req.session.user.username;
   res.send(username);
 });
+/////////////////////////////////////////Fetch data from bank server/////////////////////////////////////////////////////
 
+// Define the URL of your FastAPI server
+const apiUrl = 'http://172.18.0.3:8000';
+
+
+// Define the credentials for authentication
+const credentials = new URLSearchParams();
+credentials.append('username', 'user1');
+credentials.append('password', 'password');
+
+// Function to get user balance
+async function getUserBalance() {
+  try {
+    const tokenResponse = await axios.post(`${apiUrl}/token`, credentials);
+    if (!tokenResponse || !tokenResponse.data || !tokenResponse.data.access_token) {
+      throw new Error('Failed to obtain access token');
+    }
+    const accessToken = tokenResponse.data.access_token;
+
+    // Make request to userbalance endpoint with the access token
+    const response = await axios.get(`${apiUrl}/userbalance`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+
+    // Log the user balance
+    console.log(response.data);
+  } catch (error) {
+    // Handle errors
+    console.error('Error:', error.message);
+  }
+}
+
+// Call the function to get user balance
+getUserBalance();
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

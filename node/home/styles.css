@@ -163,3 +163,15 @@ nav ul li a:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+/* CSS for the accounts be dynamically added */
+.user-balance {
+    color: blue; /* Change text color to blue */
+    font-weight: bold; /* Make text bold */
+    border: 2px solid black; /* Add a black border */
+    padding: 10px; /* Add padding */
+    margin-bottom: 10px; /* Add space below each box */
+    margin-right: 10px; /* Add space to the right of each box */
+    display: inline-block; /* Make the paragraph display as an inline block */
+}
