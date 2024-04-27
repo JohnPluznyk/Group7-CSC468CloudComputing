@@ -45,70 +45,10 @@
 <!-----------------------------------------------------Add Accounts section------------------------------------------>
         <h1>Connected Accounts: </h1>
         <div id="output"></div>
-<!--        <button id="updateButton">Update Balance</button>  -->
 
-<!--
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        
-        <script>
-            // Define the apiUrl
-            const apiUrl = 'http://172.18.0.3:8000';
-
-
-            // Define the credentials for authentication
-            const credentials = new URLSearchParams();
-
-            // Function to get user balance
-            async function getUserBalance(username, password) {
-                credentials.append('username', username);
-                credentials.append('password', password);
-
-                try {
-                    const tokenResponse = await axios.post(`${apiUrl}/token`, credentials);
-                    if (!tokenResponse || !tokenResponse.data || !tokenResponse.data.access_token) {
-                        throw new Error('Failed to obtain access token');
-                    }
-                const accessToken = tokenResponse.data.access_token;
-
-                // Make request to userbalance endpoint with the access token
-                const response = await axios.get(`${apiUrl}/userbalance`, {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                });
-
-                // Return the user balance from the response
-                return response.data.current_balance;
-
-                } catch (error) {
-                    // Handle errors
-                    console.error('Error:', error.message);
-                }    
-            }
-            
-
-            // Function to update HTML content with user balance
-            async function updateUserBalance() {
-                const balance = await getUserBalance();
-                const outputDiv = document.getElementById('output');
-                // Create a new paragraph element
-                const paragraph = document.createElement('p');
-                // Set the text content of the paragraph to the user balance
-                paragraph.textContent = `User Balance: $${balance}`;
-                // Append the paragraph to the output div
-                outputDiv.appendChild(paragraph);
-            }
-
-
-            // Event listener for button click  --- when button is clicked this code will execute
-            document.getElementById('updateButton').addEventListener('click', updateUserBalance);
-        </script>
--->
         <hr>
         
         <!-- Bank account entries will be dynamically generated here -->
-        <!--<button id="getUserBalanceBtn">Get User Balance</button>
-        -->
 
 
     </main>
