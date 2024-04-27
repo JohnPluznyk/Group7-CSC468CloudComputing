@@ -72,7 +72,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
         
         // Define the apiUrl
-        const apiUrl = 'http://172.18.0.3:8000';   // Need to figure out the correct url for kubernetes
+        // http://172.18.0.*:8000  --- use when testing on docker locally
+        const apiUrl = 'http://bankserver-service.jp947689.svc.cluster.local:8000';   // Need to figure out the correct url for kubernetes
 
         // Define the credentials for authentication
         const credentials = new URLSearchParams();
