@@ -14,7 +14,7 @@ app.use('/home', express.static(path.join(__dirname, 'home')));
 // MySQL database configuration
 // host: 'mysql-service.jp947689.svc.cluster.local' --- When using kubernetes
 const db = mysql.createConnection({
-  host: 'mysql1',
+  host: 'mysql-service.jp947689.svc.cluster.local',
   user: 'john',
   password: 'password',
   database: 'FusionBank',
