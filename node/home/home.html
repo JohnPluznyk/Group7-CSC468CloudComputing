@@ -154,11 +154,11 @@
         document.getElementById('dataForm').addEventListener('submit', async function(event) {
             event.preventDefault();
             
-            const apiUrl = document.getElementById('userBank').value;
+            const userBank = document.getElementById('userBank').value;  // user bank actually now refers to the url addres of the bank server
             const userName = document.getElementById('userName').value;
             const userPassword = document.getElementById('userPassword').value;
 
-            const formData = { apiUrl, userName, userPassword };  //need to ask the user to enter in the URL of the external address of the bank
+            const formData = { userBank, userName, userPassword };  //need to ask the user to enter in the URL of the external address of the bank
 
             try {
                 const response = await fetch('/submit-bank-data', {
@@ -172,7 +172,7 @@
             // Close the modal if submission is successful
                 if (response.ok) {
                     // Call updateUserBalance to display the balance
-                    updateUserBalance(apiUrl, userName, userPassword)
+                    updateUserBalance(userBank, userName, userPassword)
 
                     const modal = document.getElementById('dataModal');
                     modal.style.display = 'none';
