@@ -73,7 +73,8 @@
         
         // Define the apiUrl
         // http://172.18.0.*:8000  --- use when testing on docker locally
-        const apiUrl = 'http://bankserver-service.jp947689.svc.cluster.local:8000';   // Need to figure out the correct url for kubernetes
+        // to access the banking server it would be http://pcvm***-*.emulab.net:30003 This is client side javascript so how would the user figure out the hostname of our bankserver
+        const apiUrl = 'http://pcvm***-*.emulab.net:30003';   // Need to figure out the correct url for kubernetes
 
         // Define the credentials for authentication
         const credentials = new URLSearchParams();
