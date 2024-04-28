@@ -172,7 +172,7 @@
             // Close the modal if submission is successful
                 if (response.ok) {
                     // Call updateUserBalance to display the balance
-                    updateUserBalance(userBank, userName, userPassword)
+                    updateUserBalance(userBank, userName, userPassword)  // should be passing the url of the users banks
 
                     const modal = document.getElementById('dataModal');
                     modal.style.display = 'none';
