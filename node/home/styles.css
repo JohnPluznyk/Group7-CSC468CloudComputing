@@ -1,0 +1,177 @@
+/* Resetting default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 150px;
+}
+
+.user-info {
+    font-size: 16px;
+}
+
+main {
+    padding: 20px;
+}
+
+.main-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.main-section h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.main-section p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.cta-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+    background-color: #0056b3;
+}
+
+.bank-accounts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.bank-account {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bank-account img {
+    max-width: 100px;
+    margin: 0 auto 10px;
+    display: block;
+}
+
+.bank-account h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.bank-account p {
+    font-size: 16px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-info p {
+    font-size: 16px;
+}
+
+nav ul {
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+
+/* CSS for centering and styling the "Add Bank Accounts" button */
+#addAccounts {
+    display: block;
+    margin: 0 auto; /* Center the button horizontally */
+    font-size: 1.2em; /* Increase font size */
+    padding: 10px 20px; /* Add padding */
+}
+
+/* CSS for hiding the modal by default */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* CSS for the accounts be dynamically added */
+.user-balance {
+    color: blue; /* Change text color to blue */
+    font-weight: bold; /* Make text bold */
+    border: 2px solid black; /* Add a black border */
+    padding: 10px; /* Add padding */
+    margin-bottom: 10px; /* Add space below each box */
+    margin-right: 10px; /* Add space to the right of each box */
+    display: inline-block; /* Make the paragraph display as an inline block */
+}

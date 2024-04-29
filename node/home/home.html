@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Banking Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="FusionBankLogo.png" alt="Company Logo">
+        </div>
+        <div class="user-info">
+            <span id="username"></span>
+        </div>
+    </header>
+    <main>
+        <section class="main-section">
+            <h1>Welcome to Fusion-Bank Open Banking Platform</h1>
+            <p>Connect all your bank accounts in one place</p>
+        </section>
+        
+        <section class="body-section">
+            <button id="addAccounts">Add Bank Accounts</button>
+            <!-- The Modal -->
+            <div id="dataModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form id="dataForm">
+                        <input type="text" id="userBank" placeholder="Enter url of your bank">
+                        <br>
+                        <input type="text" id="userName" placeholder="Enter your bank userName">
+                        <br>
+                        <input type="text" id="userPassword" placeholder="Enter your bank Passwod">
+                        <br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <hr>
+
+<!-----------------------------------------------------Add Accounts section------------------------------------------>
+        <h1>Connected Accounts: </h1>
+        <div id="output"></div>
+
+        <hr>
+        
+        <!-- Bank account entries will be dynamically generated here -->
+
+
+    </main>
+
+    <!-------------------------------------------Footer------------------------------------------------>
+    <footer>
+        <div class="contact-info">
+            <p>Contact us: email@example.com | 123-456-7890</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <script>
+/////////////////////////////////////////////////////////////////////////////////////////////
+        
+        // Define the apiUrl
+        // http://172.18.0.*:8000  --- use when testing on docker locally
+        
+        // to access the banking server it would be http://pcvm***-*.emulab.net:30003 This is client side javascript so how would the user figure out the hostname of our bankserver
+        //const apiUrl = 'http://pcvm***-*.emulab.net:30003';   // Need to figure out the correct url for kubernetes
+
+        // Define the credentials for authentication
+
+        // Function to get user balance
+        async function getUserBalance(apiUrl, username, password) {
+            const credentials = new URLSearchParams();
+            credentials.append('username', username);
+            credentials.append('password', password);
+
+            try {
+                const tokenResponse = await axios.post(`${apiUrl}/token`, credentials);
+                if (!tokenResponse || !tokenResponse.data || !tokenResponse.data.access_token) {
+                    throw new Error('Failed to obtain access token');
+                }
+            const accessToken = tokenResponse.data.access_token;
+
+            // Make request to userbalance endpoint with the access token
+            const response = await axios.get(`${apiUrl}/userbalance`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            // Return the user balance from the response
+            return response.data.current_balance;
+
+            } catch (error) {
+                // Handle errors
+                console.error('Error:', error.message);
+            }    
+        }
+        
+
+        // Function to update HTML content with user balance
+        async function updateUserBalance(apiUrl, username, password) {
+            // call the getUserBalance function and pass the username and password
+            const balance = await getUserBalance(apiUrl, username, password);
+            const outputDiv = document.getElementById('output');
+            // Create a new paragraph element
+            const paragraph = document.createElement('p');
+            // Set the text content of the paragraph to the user balance
+            paragraph.innerHTML = `Bank: ${apiUrl}<br>User Balance: $${balance}`;
+            // Add a class to the paragraph for styling
+            paragraph.classList.add('user-balance'); // Adding a class for styling
+            // Append the paragraph to the output div
+            outputDiv.appendChild(paragraph);
+        }
+
+//////////////////////////////////////////////////////////////////////////////
+        // Get the modal
+        const modal = document.getElementById('dataModal');
+
+        // Get the button that opens the modal
+        const btn = document.getElementById('addAccounts');
+
+        // Get the <span> element that closes the modal
+        const span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = 'block';
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        };
+
+        document.getElementById('dataForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const userBank = document.getElementById('userBank').value;  // user bank actually now refers to the url addres of the bank server
+            const userName = document.getElementById('userName').value;
+            const userPassword = document.getElementById('userPassword').value;
+
+            const formData = { userBank, userName, userPassword };  //need to ask the user to enter in the URL of the external address of the bank
+
+            try {
+                const response = await fetch('/submit-bank-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+                });
+
+            // Close the modal if submission is successful
+                if (response.ok) {
+                    // Call updateUserBalance to display the balance
+                    updateUserBalance(userBank, userName, userPassword)  // should be passing the url of the users banks
+
+                    const modal = document.getElementById('dataModal');
+                    modal.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error submitting bank data: ', error);
+                // Handle error
+            }
+        });
+//////////////////////////////////////////////////////////////////////////////////////
+
+        // Fetch username from server
+        fetch('/get-username')
+          .then(response => response.text())
+          .then(username => {
+            document.getElementById('username').textContent = `Welcome, ${username}!`;
+          })
+          .catch(error => {
+            console.error('Error fetching username:', error);
+          });
+      </script>
+</body>
+</html>
+
